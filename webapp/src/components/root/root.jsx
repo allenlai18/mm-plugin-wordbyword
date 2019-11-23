@@ -21,6 +21,7 @@ const Root = ({visible, close, theme, post}) => {
 };
 
 Root.propTypes = {
+    post: PropTypes.object,
     visible: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired,

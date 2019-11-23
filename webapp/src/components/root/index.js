@@ -8,6 +8,7 @@ import Root from './root';
 
 const mapStateToProps = (state) => ({
     visible: isRootModalVisible(state),
+    post: state.selectedPost,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
