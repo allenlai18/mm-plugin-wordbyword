@@ -1,9 +1,14 @@
+import {getPost} from 'mattermost-redux/selectors/entities/posts';
+
 import {OPEN_ROOT_MODAL, CLOSE_ROOT_MODAL} from './action_types';
 
-export const openRootModal = () => (dispatch) => {
+export const openRootModal = (postId) => (dispatch, getState) => {
+    const post = getPost(getState(), postId);
+
     dispatch({
         type: OPEN_ROOT_MODAL,
-    });
+        payload: post,
+    }, getState);
 };
 
 export const closeRootModal = () => (dispatch) => {
@@ -13,18 +18,3 @@ export const closeRootModal = () => (dispatch) => {
 };
 
 export const postDropdownMenuAction = openRootModal;
-
-// export const getPluginServerRoute = (state) => {
-//     const config = getConfig(state);
-
-//     let basePath = '/';
-//     if (config && config.SiteURL) {
-//         basePath = new URL(config.SiteURL).pathname;
-
-//         if (basePath && basePath[basePath.length - 1] === '/') {
-//             basePath = basePath.substr(0, basePath.length - 1);
-//         }
-//     }
-
-//     return basePath + '/plugins/' + pluginId;
-// };

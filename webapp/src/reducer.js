@@ -6,13 +6,12 @@ const enabled = (state = false, action) => {
     switch (action.type) {
     case STATUS_CHANGE:
         return action.data;
-
     default:
         return state;
     }
 };
 
-const rootModalVisible = (state = false, action) => {
+const rootModal = (state = false, action) => {
     switch (action.type) {
     case OPEN_ROOT_MODAL:
         return true;
@@ -23,8 +22,16 @@ const rootModalVisible = (state = false, action) => {
     }
 };
 
+const selectedPostReducer = (selectedPost = null, action) => {
+    if (action.type === 'POST_SELECTED') {
+      return action.payload;
+    }
+    return selectedPost;
+  };
+
 export default combineReducers({
     enabled,
-    rootModalVisible,
+    rootModal,
+    selectedPost: selectedPostReducer,
 });
 

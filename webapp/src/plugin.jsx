@@ -7,8 +7,9 @@ import {id as pluginId} from './manifest';
 import Root from './components/root';
 
 import {postDropdownMenuAction} from './actions';
+import reducer from './reducer';
 
-export default class WordByWordPlugin {
+export default class Plugin {
     initialize(registry, store) {
         registry.registerRootComponent(Root);
         registry.registerPostDropdownMenuAction(
@@ -16,8 +17,10 @@ export default class WordByWordPlugin {
                 id='plugin.name'
                 defaultMessage='Read Word by Word'
             />,
-            () => store.dispatch(postDropdownMenuAction()),
+            (postId) => store.dispatch(postDropdownMenuAction(postId)),
+
         );
+        registry.registerReducer(reducer);
     }
 
     uninitialize() {

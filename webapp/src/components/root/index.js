@@ -7,7 +7,7 @@ import {isRootModalVisible} from 'selectors';
 import Root from './root';
 
 const mapStateToProps = (state) => ({
-    visible: isRootModalVisible(state)
+    visible: isRootModalVisible(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
