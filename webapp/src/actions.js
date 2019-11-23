@@ -1,6 +1,14 @@
-import {OPEN_ROOT_MODAL, CLOSE_ROOT_MODAL} from './action_types';
+import {getPost} from 'mattermost-redux/selectors/entities/posts';
 
-export const openRootModal = () => (dispatch) => {
+import {OPEN_ROOT_MODAL, CLOSE_ROOT_MODAL, SELECTED_POST} from './action_types';
+
+export const openRootModal = (postId) => (dispatch, getState) => {
+    const post = getPost(getState(), postId);
+    dispatch({
+        type: SELECTED_POST,
+        payload: post,
+    });
+
     dispatch({
         type: OPEN_ROOT_MODAL,
     });

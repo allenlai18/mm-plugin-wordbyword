@@ -19,7 +19,7 @@ export default class Plugin {
                 id='plugin.name'
                 defaultMessage='Word by Word'
             />,
-            () => store.dispatch(postDropdownMenuAction()),
+            (postId) => store.dispatch(postDropdownMenuAction(postId)),
         );
 
         registry.registerReducer(reducer);

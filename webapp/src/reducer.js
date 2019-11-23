@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import {STATUS_CHANGE, OPEN_ROOT_MODAL, CLOSE_ROOT_MODAL} from './action_types';
+import {STATUS_CHANGE, OPEN_ROOT_MODAL, CLOSE_ROOT_MODAL, SELECTED_POST} from './action_types';
 
 const enabled = (state = false, action) => {
     switch (action.type) {
@@ -23,8 +23,15 @@ const rootModalVisible = (state = false, action) => {
     }
 };
 
+const selectedPostReducer = (selectedPost = null, action) => {
+    if (action.type === SELECTED_POST) {
+        return action.payload;
+    }
+    return selectedPost;
+};
+
 export default combineReducers({
     enabled,
     rootModalVisible,
+    post: selectedPostReducer,
 });
-

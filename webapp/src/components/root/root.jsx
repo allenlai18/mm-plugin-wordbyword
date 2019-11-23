@@ -1,49 +1,76 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
 
-const Root = ({visible, close, theme}) => {
-    if (!visible) {
-        return null;
+class Root extends Component {
+    state = {
+        currentWord: '',
     }
 
-    const extraContent = '';
-    const extraContentTitle = '';
+    constructor(props) {
+        super(props);
+        this.notRead = true;
+    }
 
-    const style = getStyle(theme);
-
-    return (
-        <div
-            style={style.backdrop}
-            onClick={close}
-        >
-            <div style={style.modal}>
-                <FormattedMessage
-                    id='root.triggered'
-                    defaultMessage='You have triggered the root component of the demo plugin.'
-                />
-                <br/>
-                <br/>
-                <FormattedMessage
-                    id='root.clicktoclose'
-                    defaultMessage='Click anywhere to close.'
-                />
-                <br/>
-                <br/>
-                <FormattedMessage
-                    id='demo.testintl'
-                    defaultMessage='This is the default string'
-                />
-                <br/>
-                <br/>
-                {extraContentTitle}
-                {extraContent}
+    async startRead(words) {
+        /* eslint-disable no-await-in-loop */
+        for (let i = 0; i < words.length; i++) {
+            this.setState({currentWord: words[i]});
+            if (words[i].includes('.') || words[i].includes('?') || words[i].includes('!')) {
+                await this.delay(550);
+            } else if (words[i].includes(',') || words[i].includes(':')) {
+                await this.delay(400);
+            } else if (words[i].length < 3) {
+                await this.delay(200);
+            } else {
+                await this.delay(250);
+            }
+        }
+        /* eslint-enable no-await-in-loop */
+        await this.delay(1000);
+        this.closeModalWindow();
+    }
+    async componentDidUpdate() {
+        if (this.notRead) {
+            if (this.props.post && this.props.post.message) {
+                this.notRead = false;
+                await this.delay(2050);
+                const words = this.props.post.message.split(' ');
+                await this.startRead(words);
+            }
+        }
+    }
+    async delay(delayInms) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(2);
+            }, delayInms);
+        });
+    }
+    closeModalWindow = () => {
+        this.notRead = true;
+        this.props.close();
+    }
+    render() {
+        const {visible, theme} = this.props;
+        if (!visible) {
+            return null;
+        }
+        const style = getStyle(theme);
+        return (
+            <div
+                style={style.backdrop}
+                onClick={this.closeModalWindow}
+            >
+                <div style={style.modal}>
+                    <p>{this.state.currentWord}</p>
+                </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
 Root.propTypes = {
+    post: PropTypes.object.isRequired,
     visible: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired,
