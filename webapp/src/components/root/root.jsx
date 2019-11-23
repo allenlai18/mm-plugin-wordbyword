@@ -62,7 +62,7 @@ class Root extends Component {
                 onClick={this.closeModalWindow}
             >
                 <div style={style.modal}>
-                    <p>{this.state.currentWord}</p>
+                    <p syle={style.p}>{this.state.currentWord}</p>
                 </div>
             </div>
         );
@@ -95,6 +95,12 @@ const getStyle = (theme) => ({
         padding: '1em',
         color: theme.centerChannelColor,
         backgroundColor: theme.centerChannelBg,
+        textAlign: 'center',
+    },
+    p: {
+        textAlign: 'center',
+        lineHeight: '100px',
+        fontSize: '16px',
     },
 });
 
