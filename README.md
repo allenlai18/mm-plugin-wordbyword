@@ -1,3 +1,17 @@
+There are a lot of bugs with this plugin. I haven't completely pinpointed the issue. The logic isnt very clear in `src/root/root.jsx` right now. Redux is being used to pop up the modal and things are asynchronous so Redux Thunk may be needed. The bugs come up when state is being changed and props as well and when the user doesn't let the whole thing finish and exits early so  blocking/async functions  that need a way to exit early.  Functions seems to be still running when user closes because React just makes gets rid of visibility.
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Plugin Starter Template [![CircleCI branch](https://img.shields.io/circleci/project/github/mattermost/mattermost-plugin-starter-template/master.svg)](https://circleci.com/gh/mattermost/mattermost-plugin-starter-template)
 
 This plugin serves as a starting point for writing a Mattermost plugin. Feel free to base your own plugin off this repository.
